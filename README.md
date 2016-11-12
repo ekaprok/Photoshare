@@ -1,4 +1,5 @@
 Photoshare is a database system for a web based photo social sharing application written in MySQL and Python Flask. 
+
 The system has the following interactions:
 (1) User and Friends Management: 
 	Every User has the following attributes: first name, last name, email, date of birth, hometown, gender, and password. Anyone can register if the email is unique for the database. And every user can have multiple friends. Any registered user can find a friend by typing a person’s email. 
