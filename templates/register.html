@@ -1,0 +1,36 @@
+<head>
+    <title>Create an account!</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+  <!-- REGISTRATION FORM -->
+  <div class="container">
+    <div class="col-md-12">
+    
+        {%if not supress%}
+          <h1> Email already in use! Use another one or </h1><a href='/'>Login</a> 
+        {% endif %}
+
+        <div id="logbox">
+          <form method="post" action="{{ url_for('register_user') }}">
+            <h1>create an account</h1>
+            <input name="firstName" type="text" placeholder="First Name" pattern="^[\w]{3,16}$" autofocus="autofocus" required="required" class="input pass"/>
+            <input name="lastName" type="text" placeholder="Last Name" pattern="^[\w]{3,16}$" autofocus="autofocus" required="required" class="input pass"/>
+            <input name="email" type="email" placeholder="Email address" class="input pass"/>
+            <input name="hometown" type="text" placeholder="Hometown" class="input pass"/>
+            <input name="gender" type="text" placeholder="Gender (M or F)" class="input pass"/>
+            <input name="dateOfBirth" type="date" placeholder="Date Of Birth" class="input pass"/>
+            <input name="password" type="password" placeholder="Choose a password" required="required" class="input pass"/>
+            <input type="submit" value="Sign me up!" class="inputButton"/>
+            <div class="text-center">
+                already have an account? <a href='/'>Login</a> 
+            </div>
+          </form>
+        </div>
+   </div>
+</div>
+
+</body>
+<a href='/'>Home</a>

@@ -1,0 +1,103 @@
+<!doctype html>
+<title>Photoshare</title>
+
+<div class="col-md-6">
+	<h4>Welcome to Photoshare!</h4>
+   {% if message %}
+    <h1> {{ message }}!</h1><a class="link" href="register">Sign UP instead</a>
+  {% endif %}
+
+  {% if not current_user.is_authenticated %}
+    <div class="col-md-6">
+      <div id="logbox">
+        <form action='login' method='POST'>
+          <h1>account login</h1>
+          <input name="email" type="text" id='email' placeholder="enter your email" class="input pass"/>
+          <input name="password" type="password" id='password' placeholder="enter your password" required="required" class="input pass"/>
+          <input name="submit" type="submit" value="Sign me in!" class="inputButton"/>
+          <div class="text-center"">
+              <a href="register" id="">Don't have an account? Sign Up now!</a>
+          </div>
+        </form>
+      </div>
+  </div>
+  {% endif %}
+
+  {% if current_user.is_authenticated %}
+    <ul>
+      <li><a href='/logout'>Logout</a></li>
+      <li><a href='/'>Home</a></li>
+      <li><a href='/profile'>Profile</a></li>
+    </ul>
+  {% endif %}
+
+  <h4>Here's all the pictures!</h4>
+  <ul>
+    {% for i in range(photos|length) %}
+      <li>
+          </br>
+          <img width="450px" height="300px" src='data:image/png;base64, {{photos[i][0]}}'/>  
+          <p>Added by {{userNames[i]}}</p>
+            {% if comments%}
+              <h2>Comments</h2>
+              {% for comment in comments[i] %}
+                <ul>
+                  <li>{{comment}}</li>
+                </ul>
+              {% endfor %}
+            {% endif %}
+
+
+            {% if likes %}
+              <h3>Likes: </h3>
+                <p>{{likes[i]}}</p>
+
+              <h2>Users who Liked the picture:</h2>
+              {% for user in usersLiked[i] %}
+                <p>{{user}}</p>
+              {% endfor %}
+            {% endif %}
+
+          <form action="add_comment" method = "POST">
+            <input type="text" name="comment"/>
+            <input type="hidden" value = {{i+1}} name="picture_id" required='true' />
+            <input type="submit" name="add_comment" value="add comment"/>
+          </form>
+
+          <form action="add_like" method = "POST">
+            <input type="hidden" value = {{i+1}} name="picture_id" required='true' />
+            <input type="submit" name="add_like" value="like"/>
+          </form>
+
+      </li>
+    {% endfor %}
+  </ul>
+
+
+  {% if mostPopularTags%}
+    <h1>Most Popular Tags </h1>
+    {% for tag in mostPopularTags %}
+      <ul>
+        <a href="public_tags/{{tag}}">{{tag}}</a>
+      </ul>
+    {% endfor %}
+  {% endif %}
+
+  <h1>Search Photos by Tags</h1>
+  <form action="search_by_tag" method = "POST">
+    <input type="text" placeholder="tag" name="tag_name" required='true' />
+    <input type="submit" name="searchByTag" value="search"/>
+  </form>
+  
+  {% if search_tags %}
+    {% for tag in search_tags %}
+      <ul>
+            <li>
+              <img width="450px" height="300px" src='data:image/png;base64, {{tag[0]}}'/>
+            </li>
+          </ul>
+      {% endfor %}
+  {% endif %}
+
+
+</div>
